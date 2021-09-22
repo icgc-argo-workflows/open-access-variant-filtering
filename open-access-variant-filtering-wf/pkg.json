@@ -11,7 +11,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/icgc-argo/open-access-variant-filtering.git"
+        "url": "https://github.com/icgc-argo-workflows/open-access-variant-filtering.git"
     },
     "dependencies": [
         "github.com/icgc-argo/data-processing-utility-tools/cleanup-workdir@1.0.0",
@@ -28,6 +28,6 @@
         }
     ],
     "license": "GNU Affero General Public License v3",
-    "bugReport": "https://github.com/icgc-argo/open-access-variant-filtering/issues",
-    "homepage": "https://github.com/icgc-argo/open-access-variant-filtering#readme"
+    "bugReport": "https://github.com/icgc-argo-workflows/open-access-variant-filtering/issues",
+    "homepage": "https://github.com/icgc-argo-workflows/open-access-variant-filtering#readme"
 }
