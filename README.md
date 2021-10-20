@@ -78,11 +78,11 @@ For `RDPC` mode, SONG/SCORE services need to be available and you have appropria
 - Inputs
 
 ```
---study_id '[SONG study ID]'
---analysis_id '[SONG variant_calling analysis ID]'
---song_url": '[SONG server URL]'
---score_url": '[SCORE server URL]'
---regions_file '[path to RDPC NFS genomic region file]' 
+--study_id '[ICGC-ARGO study ID]'
+--analysis_id '[ICGC-ARGO SONG variant_calling analysis ID]'
+--song_url": '[ICGC-ARGO SONG server URL]'
+--score_url": '[ICGC-ARGO SCORE server URL]'
+--regions_file '[path to ICGC-ARGO RDPC NFS genomic region file]' 
 ```
 
 - Outputs
@@ -94,8 +94,8 @@ The generated outputs are uploaded to SONG/SCORE automatically. You will need us
 
 **Argument name**|**Description**|**Default value**|**Requirement**
 -----|-----|-----|-----
-study\_id|ARGO study ID|null|Required in RDPC mode
-analysis\_id|ARGO SONG analysis ID|null|Required in RDPC mode
+study\_id|ICGC-ARGO study ID|null|Required in RDPC mode
+analysis\_id|ICGC-ARGO SONG analysis ID|null|Required in RDPC mode
 analysis\_metadata|Local SONG analysis metadata|null|Required in local mode
 vcf\_file|Local SNV/InDel variant calling VCF. <br> The index file is expected to be under the same folder|null|Required in local mode
 region\_file|BED file to define ARGO open access regions|null|Required
@@ -107,7 +107,7 @@ apply\_filters|Skip sites where FILTER column does not contain any of the string
 include|Select sites for which the expression is true|{<br>'CaVEMan': "INFO/CLPM=0 && INFO/ASRD>=0.93", <br>'Pindel': "", <br>'GATK:Mutect2': ""<br>} |Optional
 exclude|Exclude sites for which the expression is true|{<br>'CaVEMan': "", <br>'Pindel': "", <br>'GATK:Mutect2': ""<br>} |Optional
 open|If true(default), then the output files are set with open access|true|Optional
-cleanup|Clean up the inputs/temporary/outputs under the work\_dir. <br> Skip cleanup when running in local mode.|true|Optional 
+cleanup|If true(default), then clean up the inputs/temporary/outputs under the work\_dir. <br> Skip cleanup when running in local mode.|true|Optional 
 cpus|Set requirements for number of CPUs for all processes|1|Optional
 mem|Set requirements for memory in GB for all processes |1|Optional
 
