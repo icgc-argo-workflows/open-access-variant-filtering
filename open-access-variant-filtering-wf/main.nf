@@ -26,12 +26,12 @@ short_name = 'open-filter'
 version = '0.5.0'
 
 // universal params go here, change default value as needed
-params.container = ""
-params.container_registry = ""
-params.container_version = ""
 params.cpus = 1
 params.mem = 1  // GB
 params.publish_dir = ""  // set to empty string will disable publishDir
+params.cleanup = true
+params.max_retries = 5  // set to 0 will disable retry
+params.first_retry_wait_time = 1  // in seconds
 
 // tool specific parmas go here, add / change as needed
 params.study_id = ""
@@ -59,10 +59,17 @@ params.open = true
 params.analysis_metadata = "NO_FILE_metadata"
 params.vcf_file = "NO_FILE_vcf"
 
-params.api_token = ""
+// song/score setting
 params.song_url = ""
+params.song_container = "ghcr.io/overture-stack/song-client"
+params.song_container_version = "5.0.2"
 params.score_url = ""
-params.cleanup = true
+params.score_container = "ghcr.io/overture-stack/score"
+params.score_container_version = "5.9.0"
+params.score_mem = 20
+params.score_cpus = 8
+params.score_force = false
+params.api_token = ""
 
 params.download = [:]
 params.upload = [:]
@@ -70,22 +77,39 @@ params.filter = [:]
 params.payloadGenVcf = [:]
 
 download_params = [
+    'max_retries': params.max_retries,
+    'first_retry_wait_time': params.first_retry_wait_time,
+    'song_url': params.song_url,
+    'song_container': params.song_container,
+    'song_container_version': params.song_container_version,
     'song_cpus': params.cpus,
     'song_mem': params.mem,
-    'score_cpus': params.cpus,
-    'score_mem': params.mem,
-    'song_url': params.song_url,
     'score_url': params.score_url,
+    'score_container': params.score_container,
+    'score_container_version': params.score_container_version,
+    'score_cpus' : params.score_cpus,
+    'score_mem' : params.score_mem,
+    'score_transport_mem' : params.score_mem, 
     'api_token': params.api_token,
     'publish_dir': params.publish_dir,
     *:(params.download ?: [:])
 ]
 
 upload_params = [
-    'cpus': params.cpus,
-    'mem': params.mem,
+    'max_retries': params.max_retries,
+    'first_retry_wait_time': params.first_retry_wait_time,
     'song_url': params.song_url,
+    'song_container': params.song_container,
+    'song_container_version': params.song_container_version,
+    'song_cpus': params.cpus,
+    'song_mem': params.mem,
     'score_url': params.score_url,
+    'score_container': params.score_container,
+    'score_container_version': params.score_container_version,
+    'score_force' : params.score_force,
+    'score_cpus' : params.score_cpus,
+    'score_mem' : params.score_mem,
+    'score_transport_mem' : params.score_mem,
     'api_token': params.api_token,
     'publish_dir': params.publish_dir,
     *:(params.upload ?: [:])
@@ -94,7 +118,7 @@ upload_params = [
 filter_params = [
     'cpus': params.cpus,
     'mem': params.mem,
-    'publish_dir': '',
+    'publish_dir': params.publish_dir,
     'regions_file': params.regions_file,
     'apply_filters': params.apply_filters,
     'output_type': params.output_type,
@@ -110,11 +134,11 @@ payloadGenVcf_params = [
     *:(params.payloadGenVcf ?: [:])
 ]
 
-include { SongScoreDownload as dnVcf } from './wfpr_modules/github.com/icgc-argo/nextflow-data-processing-utility-tools/song-score-download@2.6.1/main.nf' params(download_params)
+include { SongScoreDownload as dnVcf } from './wfpr_modules/github.com/icgc-argo-workflows/nextflow-data-processing-utility-tools/song-score-download@2.9.0/main.nf' params(download_params)
 include { metadataParser as mParser } from "./modules/raw.githubusercontent.com/icgc-argo/data-processing-utility-tools/metadata-parser.0.2.0.0/tools/metadata-parser/metadata-parser.nf"
 include { variantFilter as vFilter } from './wfpr_modules/github.com/icgc-argo/variant-calling-tools/variant-filter@0.1.0/main.nf' params(filter_params)
 include { payloadGenVariantProcessing as pGenVar } from "./wfpr_modules/github.com/icgc-argo-workflows/data-processing-utility-tools/payload-gen-variant-processing@0.3.0/main.nf" params(payloadGenVcf_params)
-include { SongScoreUpload as upVcf } from './wfpr_modules/github.com/icgc-argo/nextflow-data-processing-utility-tools/song-score-upload@2.6.1/main.nf' params(upload_params)
+include { SongScoreUpload as upVcf } from './wfpr_modules/github.com/icgc-argo-workflows/nextflow-data-processing-utility-tools/song-score-upload@2.9.3/main.nf' params(upload_params)
 include { getSecondaryFiles as getSec } from './wfpr_modules/github.com/icgc-argo/data-processing-utility-tools/helper-functions@1.0.0/main.nf'
 include { cleanupWorkdir as cleanup } from './wfpr_modules/github.com/icgc-argo/data-processing-utility-tools/cleanup-workdir@1.0.0/main.nf'
 

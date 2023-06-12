@@ -18,8 +18,8 @@
         "github.com/icgc-argo/data-processing-utility-tools/helper-functions@1.0.0",
         "github.com/icgc-argo-workflows/data-processing-utility-tools/payload-gen-variant-processing@0.3.0",
         "github.com/icgc-argo/variant-calling-tools/variant-filter@0.1.0",
-        "github.com/icgc-argo/nextflow-data-processing-utility-tools/song-score-download@2.6.1",
-        "github.com/icgc-argo/nextflow-data-processing-utility-tools/song-score-upload@2.6.1"
+        "github.com/icgc-argo-workflows/nextflow-data-processing-utility-tools/song-score-download@2.9.0",
+        "github.com/icgc-argo-workflows/nextflow-data-processing-utility-tools/song-score-upload@2.9.3"
     ],
     "devDependencies": [],
     "contributors": [
