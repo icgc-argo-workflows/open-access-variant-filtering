@@ -199,7 +199,7 @@ workflow OpenFilterWf {
     // skip upload if in local_mode
     if (!local_mode) {
         // uploadVariant
-        upVcf(study_id, pGenVar.out.payload, pGenVar.out.files_to_upload)
+        upVcf(study_id, pGenVar.out.payload, pGenVar.out.files_to_upload, '')
     }
 
     // cleanup, skip cleanup when running in local mode
